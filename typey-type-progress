@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Update these two paths to suit you:
+folder="$HOME/Dropbox/steno/steno-progress/"
+file="$HOME/Dropbox/steno/steno-progress/"`date -j "+%a-%d-%b-%Y-%s"`".txt"
+
+pbpaste > "$file" && exitcode=$?
+
+if [[ $exitcode != 0 ]]; then
+  /usr/bin/osascript -e "display notification \"Failed to save progress\""
+else
+  /usr/bin/osascript -e "display notification \"Saved Typey Type progress\""
+  cd $folder
+  # Uncomment these for auto-committing progress if it's a git repo:
+  # git add .
+  # git commit -m "AUTO: Save Typey Type progress to $file"
+  cd -
+fi
+
